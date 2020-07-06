@@ -43,15 +43,20 @@ var app = new Vue({
 
     delete(url, onmsg, onloadend) {
       this.request_self("DELETE", url, onmsg, onloadend);
-    },  
+    },
+    
+    path_to_url(path) {
+      return path.replace(/\./g, "/");
+    },
 
     // Initialize application, send initial request for id of self
     init() {
       this.get("this", (msg) => {
-        this.server_id = msg;
+        this.server_id = msg.server_id;
+        this.get("scope/" + this.path_to_url(this.server_id) + "?include=flecs.dash.App", (msg) => {
+          this.apps = msg;
+        });
       });
-
-      this.app_load("browser");
     },
 
     // Anything that needs to appen periodically
@@ -115,6 +120,7 @@ var app = new Vue({
   data: {
     host: window.location.host,
     app: "",
+    apps: [],
     server_id: ""
   }
 });

@@ -14,30 +14,29 @@
  * dependencies will automatically show up in this file. Include bake_config.h
  * in your main project file. Do not edit! */
 
-#ifndef FLECS_DASH_BAKE_CONFIG_H
-#define FLECS_DASH_BAKE_CONFIG_H
+#ifndef HELLO_DASH_BAKE_CONFIG_H
+#define HELLO_DASH_BAKE_CONFIG_H
 
 /* Headers of public dependencies */
 #include <flecs.h>
 #include <flecs_meta.h>
-#include <flecs_player.h>
-#include <flecs_components_http.h>
-#include <flecs_rest.h>
+#include <flecs_systems_civetweb.h>
+#include <flecs_dash.h>
 
 /* Headers of private dependencies */
-#ifdef flecs_dash_EXPORT
+#ifdef hello_dash_EXPORT
 /* No dependencies */
 #endif
 
 /* Convenience macro for exporting symbols */
-#if flecs_dash_EXPORTS && (defined(_MSC_VER) || defined(__MINGW32__))
-  #define FLECS_DASH_EXPORT __declspec(dllexport)
-#elif flecs_dash_EXPORTS
-  #define FLECS_DASH_EXPORT __attribute__((__visibility__("default")))
+#if hello_dash_EXPORTS && (defined(_MSC_VER) || defined(__MINGW32__))
+  #define HELLO_DASH_EXPORT __declspec(dllexport)
+#elif hello_dash_EXPORTS
+  #define HELLO_DASH_EXPORT __attribute__((__visibility__("default")))
 #elif defined _MSC_VER
-  #define FLECS_DASH_EXPORT __declspec(dllimport)
+  #define HELLO_DASH_EXPORT __declspec(dllimport)
 #else
-  #define FLECS_DASH_EXPORT
+  #define HELLO_DASH_EXPORT
 #endif
 
 #endif

@@ -1,9 +1,10 @@
 body {
-    font-family: Roboto,Noto Sans,Noto,sans-serif;
-    font-size: 1.0em;
-    font-size: 16px;
-    background-color: #37393E;
-    margin: 0px;
+  font-family: Roboto,Noto Sans,Noto,sans-serif;
+  font-size: 1.0em;
+  font-size: 16px;
+  background-color: #37393E;
+  color: #eee;
+  margin: 0px;
 }
 
 #app {
@@ -11,9 +12,11 @@ body {
 }
 
 div.sidebar {
+  position: absolute;
   background-color: #1E2022;
+  top: 40px;
   width: 70px;
-  height: calc(100vh - 10px);
+  height: calc(100vh - 50px);
   padding-top: 12px;
 }
 
@@ -24,12 +27,12 @@ div.sidebar-button-container {
 }
 
 div.sidebar-button {
-  background-color: #37393E;
   border-radius: 10px;
   margin-left: 12px;
   width: 45px;
   height: 45px;
   cursor: pointer;
+  text-align: center;
 }
 
 div.sidebar-selector {
@@ -55,12 +58,148 @@ div.sidebar-selector-hover {
   left: 0px;
 }
 
+img.sidebar-icon {
+  width: 40px;
+  height: 40px;
+  margin-top: 3;
+}
+
 div.content {
   position: absolute;
   width: calc(100% - 70px);
-  height: 100vh;
-  top: 0px;
+  height: calc(100vh - 40px);
+  top: 40px;
   left: 70px;
+}
+
+div.play-controls {
+  background-color: rgb(23, 24, 26);;
+  position: absolute;
+  top: 0px;
+  width: 100%;
+  height: 40px;
+  box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2);
+}
+
+div.play-buttons {
+  position: relative;
+  width: 100px;
+  margin: 0 auto;
+  padding: 4px;
+}
+
+div.play-button img {
+  width: 30px;
+  height: 30px;
+  float: left;
+  cursor: pointer;
+  background-color: #37393E;
+  margin: 1px;  
+  border-radius: 2px;
+  transition: background-color 100ms;
+}
+
+div.player-active img {
+  background-color: #777;
+}
+
+div.perf-summary {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  width: 200px;
+  height: 40px;
+}
+
+div.perf-clock {
+  position: relative;
+  float: left;
+  margin: 0 auto;
+  left: 10px;
+  top: -1px;
+
+  padding: 2px;
+  padding-left: 10px;
+  padding-right: 4px;
+  font-size: 18px;
+  
+  border-radius: 5px;
+  border-color: #37393E;
+  border-style: solid;
+  border-width: 1px;
+  
+  background-color: #000;
+  color: #777;
+}
+
+div.perf-clock-active {
+  color: #5BE595; 
+}
+
+div.perf-clock img {
+  position: relative;
+  top: 2px;
+  /* float: left; */
+
+  height: 17px;
+}
+
+div.perf-fps {
+  position: relative;
+  top: 7px;
+  right: 35px;
+  width: 80px;
+  background-color: #000;
+  border-color: #37393E;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 5px;
+  min-height: 25px;
+}
+
+span.perf-fps-value {
+  position: absolute;
+  border-radius: 5px;
+  background-color: #000;
+  font-size: 18px;  
+  padding: 2px;
+  padding-left: 8px;
+}
+
+span.perf-label {
+  position: absolute;
+  right: 0px;
+  background-color: #37393E;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  font-size: 12px;
+  padding: 5px;
+  padding-top: 6px;
+}
+
+span.perf-fps-ok {
+  color: #5BE595;
+}
+
+div.perf-load {
+  position: absolute;
+  right: 10px;
+  top: 7px;
+  height: 25px;
+  width: 130px;
+  
+  border-color: #37393E;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 5px;   
+  background-color: #000;
+}
+
+div.perf-load svg {
+  position: absolute;
+  background-color: #000;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
 }
 
 input {

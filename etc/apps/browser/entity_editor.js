@@ -102,8 +102,8 @@ Vue.component('entity-editor', {
     }
   },
   template: `
-    <div class="entity-editor">
-      <div :style="'visibility: ' + entity_hidden()">
+    <div>
+      <div class="entity-editor" :style="'visibility: ' + entity_hidden()">
         <div class="entity-name">
           {{ components.path }}
           <img src="images/sync.png" class="entity-icon" v-on:click="e_sync">

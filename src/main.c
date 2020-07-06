@@ -37,7 +37,9 @@ bool request_files(
         file = "index.html";
     }
 
-    sprintf(path, "etc/%s", file);
+    char *etc_path = ecs_os_module_to_etc("flecs.dash");
+
+    sprintf(path, "%s/%s", etc_path, file);
 
     FILE *f = fopen(path, "r");
     if (!f) {
@@ -53,13 +55,45 @@ bool request_files(
 }
 
 static
+bool request_player(
+    ecs_world_t *world,
+    ecs_entity_t entity,
+    EcsHttpEndpoint *endpoint,
+    EcsHttpRequest *request,
+    EcsHttpReply *reply)
+{
+    const char *cmd = request->relative_url;
+
+    ecs_entity_t ecs_entity(EcsPlayer) = ecs_lookup_fullpath(
+            world, "flecs.player.Player");
+
+    if (ecs_entity(EcsPlayer)) {
+        EcsPlayer *player = ecs_get_mut(world, EcsWorld, EcsPlayer, NULL);
+
+        if (!strcmp(cmd, "play")) {
+            player->state = EcsPlayerPlay;
+        } else if (!strcmp(cmd, "pause")) {
+            player->state = EcsPlayerPause;
+        } else if (!strcmp(cmd, "stop")) {
+            player->state = EcsPlayerStop;
+        }
+
+        ecs_modified(world, EcsWorld, EcsPlayer);
+    }
+
+    return true;
+}
+
+static
 void RunServer(ecs_iter_t *it) {
     ecs_world_t *world = it->world;
 
     EcsDashServer *server = ecs_column(it, EcsDashServer, 1);
 
-    ecs_entity_t ecs_entity(EcsHttpEndpoint) = ecs_column_entity(it, 3);
-    ecs_entity_t ecs_entity(EcsRestServer) = ecs_column_entity(it, 4);
+    ecs_entity_t ecs_entity(EcsHttpEndpoint) = ecs_column_entity(it, 2);
+    ecs_entity_t ecs_entity(EcsRestServer) = ecs_column_entity(it, 3);
+    ecs_entity_t ecs_entity(EcsDashApp) = ecs_column_entity(it, 4);
+    ecs_entity_t EcsDashInitialized = ecs_column_entity(it, 5);
 
     int32_t i;
     for (i = 0; i < it->count; i ++) {
@@ -68,6 +102,11 @@ void RunServer(ecs_iter_t *it) {
 
         /* Create REST server */
         ecs_set(world, e, EcsRestServer, {.port = s->port});
+
+        if (ecs_has_entity(world, e, EcsDashInitialized)) {
+            /* Don't add endpoints again if already initialized */
+            continue;
+        }
         
         /* Add endpoint to server for serving up files */
         ecs_entity_t e_files = ecs_new_w_entity(world, ECS_CHILDOF | e);
@@ -81,7 +120,26 @@ void RunServer(ecs_iter_t *it) {
             ecs_set(world, e_this, EcsName, {"e_this"});
             ecs_set(world, e_this, EcsHttpEndpoint, {
                 .url = "this",
-                .action = request_this});                
+                .action = request_this}); 
+
+        /* Add endpoint to server that returns entity id of server */
+        ecs_entity_t e_player = ecs_new_w_entity(world, ECS_CHILDOF | e);
+            ecs_set(world, e_player, EcsName, {"e_player"});
+            ecs_set(world, e_player, EcsHttpEndpoint, {
+                .url = "player",
+                .action = request_player,
+                .synchronous = true});
+
+        /* Add browser app */
+        ecs_entity_t dash_browser = ecs_new_w_entity(world, ECS_CHILDOF | e);
+            ecs_set(world, dash_browser, EcsName, {"browser"});
+            ecs_set(world, dash_browser, EcsDashApp, {
+                .path = "etc/apps/browser",
+                .icon = "images/table.png"
+            });
+
+        /* Prevent initializing the server again */
+        ecs_add_entity(world, e, EcsDashInitialized);
     }
 }
 
@@ -101,60 +159,26 @@ void FlecsDashImport(
 {
     ECS_MODULE(world, FlecsDash);
 
+    ECS_IMPORT(world, FlecsDashMonitor, 0);
+
     ECS_IMPORT(world, FlecsMeta, 0);
+    ECS_IMPORT(world, FlecsPlayer, 0);
     ECS_IMPORT(world, FlecsComponentsHttp, 0);
-    ECS_IMPORT(world, FlecsSystemsRest, 0);
+    ECS_IMPORT(world, FlecsRest, 0);
 
     ecs_set_name_prefix(world, "EcsDash");
 
     ECS_META(world, EcsDashServer);
     ECS_META(world, EcsDashApp);
 
+    ECS_TAG(world, EcsDashInitialized);
+
     ECS_SYSTEM(world, RunServer, EcsOnSet, Server,
-        :flecs.components.http.Server,
         :flecs.components.http.Endpoint,
-        :flecs.systems.rest.Server);
+        :flecs.rest.Server,
+        :App,
+        :Initialized);
 
     ECS_EXPORT_COMPONENT(EcsDashServer);
     ECS_EXPORT_COMPONENT(EcsDashApp);
-}
-
-int main(int argc, char *argv[]) {
-    ecs_world_t *world = ecs_init();
-    
-    ECS_IMPORT(world, FlecsDash, 0);
-    ECS_IMPORT(world, FlecsSystemsCivetweb, 0);
-    ECS_IMPORT(world, FlecsMeta, 0);
-
-    ECS_META(world, Position);
-    ECS_META(world, Velocity);
-
-    ECS_ENTITY(world, E1, 0);
-        ecs_set(world, E1, Position, {10, 20});
-        ecs_set(world, E1, Velocity, {1, 1});
-
-    ECS_ENTITY(world, E2, 0);
-        ecs_set(world, E2, Position, {30, 40});
-        ecs_set(world, E2, Velocity, {1, 1});
-
-    ECS_ENTITY(world, E3, CHILDOF | E2);
-        ecs_set(world, E3, Position, {30, 40});
-        ecs_set(world, E3, Velocity, {1, 1});
-
-    // Create dash server
-    ecs_entity_t dash = ecs_set(world, 0, EcsName, {"dash"});
-        ecs_set(world, dash, EcsDashServer, {.port = 8080});
-
-    // Create dash browser app
-    ecs_entity_t dash_browser = ecs_new_w_entity(world, ECS_CHILDOF | dash);
-        ecs_set(world, dash_browser, EcsName, {"browser"});
-        ecs_set(world, dash_browser, EcsDashApp, {
-            .path = "etc/apps/browser"
-        });
-
-    ecs_set_target_fps(world, 60);
-
-    while (ecs_progress(world, 0));
-
-    ecs_fini(world);
 }

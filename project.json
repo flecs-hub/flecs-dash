@@ -1,15 +1,15 @@
 {
     "id": "flecs.dash",
-    "type": "application",
+    "type": "package",
     "value": {
         "author": "Sander Mertens",
         "description": "Flecs admin module",
         "use": [
             "flecs",
             "flecs.meta",
+            "flecs.player",
             "flecs.components.http",
-            "flecs.systems.rest",
-            "flecs.systems.civetweb"
+            "flecs.rest"
         ]
     }
 }

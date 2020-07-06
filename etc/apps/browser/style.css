@@ -1,6 +1,103 @@
 div.browser {
   width: 100%;
   height: 100%;
+  color: #eee;
+}
+
+div.entity-tree-list-container {
+  position: absolute;
+  top: 60px;
+  height: calc(100% - 200px);
+}
+
+div.entity-data-container {
+  position: absolute;
+  top: 0px;
+  left: 270px;
+  max-width: calc(100% - 275px);
+  height: calc(100% - 10px);
+  overflow-y: auto;
+}
+
+div.entity-table {
+  margin: 10px;
+}
+
+div.entity-table-header {
+  background-color: #1E2022;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px; 
+  border-style: solid;
+  border-color: #1E2022; 
+  padding: 5px;
+}
+
+div.entity-table-body {
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 20px;
+  overflow-x: auto;
+}
+
+div.entity-table-body table {
+  color: #eee;
+  border-collapse: collapse;
+
+  background-color: #303136;
+  border-radius: 5px;
+  box-shadow: 3px 5px 10px rgba(0, 0, 0, 0.5); 
+}
+
+th.table-component {
+  background-color: #1E2022;
+  padding-top: 10px;
+  padding-left: 16px;
+  padding-right: 16px;
+  text-transform: uppercase;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+th.table-component:first-child {
+  border-top-left-radius: 5px;
+}
+
+th.table-component:last-child {
+  border-top-right-radius: 5px;
+}
+
+.table-separator {
+  background-color: #37393E !important;
+  padding: 0.5px !important;
+}
+
+td.table-separator {
+  border-top-color: #37393E;
+  border-top-style: solid;
+  border-top-width: 1px;
+}
+
+th.table-member {
+  background-color: #1E2022 !important;
+  color: #aaa !important;
+  text-align: center;
+  padding-left: 8px;
+  padding-right: 8px;
+  padding-bottom: 5px;
+  font-weight: normal; 
+}
+
+td.table-value {
+  font-weight: 300;
+  padding: 8px;
+  padding-left: 10px;
+  padding-right: 10px;
+  text-align: center;
+  white-space: nowrap;
+
+  border-top-color: #37393E;
+  border-top-style: solid;
+  border-top-width: 1px;
 }
 
 div.entity-tree {
@@ -12,6 +109,7 @@ div.entity-tree {
   padding: 10px;
   background-color: #303136;
   margin: 0px;
+  box-shadow: 5px 0px 8px rgba(0, 0, 0, 0.4);
 }
 
 div.entity-tree-list {
@@ -24,16 +122,9 @@ div.entity-tree-list {
   margin: 0px;
 }
 
-div.entity-tree-list-container {
-  position: absolute;
-  top: 60px;
-  height: calc(100% - 200px);
-}
-
 div.entity-tree-item {
   position: relative;
   font-size: 16px;
-  color: #aaa;
   padding-left: 10px;
   padding-right: 20px;
   padding-top: 10px;
@@ -62,12 +153,12 @@ div.entity-tree-item:hover {
 }
 
 div.entity-tree-item-disabled {
-  color: #777;
+  color: #aaa;
 }
 
 div.entity-tree-item-active {
   background-color: #37393E;
-  color: #fff;
+  color: #eee;
 }
 
 span.entity-item-name {
@@ -78,9 +169,8 @@ span.entity-kind {
   position: absolute;
   border-style: solid;
   border-width: 1px;
-  border-color: #aaa;
+  border-color: #eee;
   border-radius: 4px;
-  color: #aaa;
   top: 11px;
   left: 15px;
   padding: 2px;
@@ -128,9 +218,9 @@ div.entity-search input {
   border-color: #1E2022;
   margin: 2px;
   width: 246px;
-  color: #aaa;
   font-size: 16px;
   padding: 8px;
+  color: #eee;
   transition: border-color 200ms;
 }
 
@@ -141,7 +231,6 @@ div.entity-search-found input {
 p.list-header {
   position: absolute;
   text-transform: uppercase;
-  color: #aaa;
   font-size: 14px;
   font-weight: bold;
   padding: 10px;
@@ -172,11 +261,11 @@ div.entity-editor {
   min-width: 350px;
   height: calc(100%);
   margin: 0px;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
 }
 
 div.entity-name {
   background-color: #1E2022;
-  color: #aaa;
   font-size: 14px;
   font-weight: bold;
   padding: 10px;
@@ -193,7 +282,7 @@ div.entity-component-buttons {
 }
 
 button {
-  background-color: #aaa;
+  background-color: #eee;
   color: #1E2022;
   padding: 6px;
   margin-top: 5px;
@@ -205,7 +294,6 @@ button {
 }
 
 div.entity-component-name {
-  color: #aaa;
   font-weight: bold;
   padding: 10px;
   margin-top: 20px;
@@ -217,7 +305,6 @@ div.entity-component-name {
 }
 
 div.entity-component-value {
-  color: #aaa;
   padding: 5px;
   margin-top: 5px;
   margin-bottom: 10px;
@@ -226,7 +313,6 @@ div.entity-component-value {
 span.entity-tag {
  position: relative;
  background-color: #1E2022;
- color: #aaa;
  padding: 8px;
  padding-right: 30px;
  margin: 2px;
@@ -268,7 +354,7 @@ div.component-key {
   position: absolute;
   top: 0px;
   font-size: 14px;
-  color: #777;
+  color: #aaa;
 }
 
 div.property-value {
@@ -284,7 +370,6 @@ div.property-value input {
   border-style: solid;
   border-width: 1px;
   border-color: #1E2022;
-  color: #aaa;
   font-size: 14px;
   margin-bottom: 5px;
   width: 100%;
@@ -299,6 +384,18 @@ div.property-value-number input {
 }
 
 div.property-value-boolean input {
+  color: #4981B5;
+}
+
+.property-value-string {
+  color: #B56D48;
+}
+
+.property-value-number {
+  color: #67B588;
+}
+
+.property-value-boolean {
   color: #4981B5;
 }
 

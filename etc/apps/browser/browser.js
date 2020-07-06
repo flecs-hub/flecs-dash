@@ -2,6 +2,7 @@
 Vue.component('app-browser', {
   data: function() {
     return {
+      scope: "",
       entity: "",
       entity_validated: "",
       entity_components: {},
@@ -14,6 +15,10 @@ Vue.component('app-browser', {
       this.entity = event.entity;
       this.$refs.editor.select_entity(event.entity);
     },
+    e_select_scope(event) {
+      this.scope = event.scope;
+      this.$refs.data.select_scope(event.scope);
+    },
     e_select_component(event) {
       this.$refs.component_search.activate(event);
     }
@@ -23,11 +28,22 @@ Vue.component('app-browser', {
       <link rel="stylesheet" href="apps/browser/style.css">
 
       <div clas="entity-tree-container">
-        <entity-tree v-on:select-entity="e_select_entity" :show_nav="true" :auto_update="true">
+        <entity-tree 
+          v-on:select-entity="e_select_entity" 
+          v-on:select-scope="e_select_scope"
+          :show_nav="true" 
+          :auto_update="true">
         </entity-tree>   
       </div>
+
+      <div class="entity-data-container">
+        <entity-data 
+          :scope="scope"
+          ref="data">
+        </entity-data>
+      </div>
       
-      <entity-editor 
+      <entity-editor
         :entity="entity" 
         :components="entity_components" 
         v-on:select-component="e_select_component"
@@ -71,5 +87,11 @@ app.app_loaded("browser", [{
   }, {
     name: "component-search",
     url: "apps/browser/component_search.js"
+  }, {
+    name: "entity-data",
+    url: "apps/browser/entity_data.js"
+  }, {
+    name: "entity-table",
+    url: "apps/browser/entity_table.js"
   }]
 );

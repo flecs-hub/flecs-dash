@@ -75,7 +75,7 @@ Vue.component('entity-tree-item', {
         } else if (el == "Prefab") {
           component = el;
           break;
-        } else if (el == "flecs.systems.System") {
+        } else if (el == "flecs.system.System") {
           component = "System";
           break;
         } else if (el == "Type") {

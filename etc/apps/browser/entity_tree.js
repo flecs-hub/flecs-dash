@@ -25,11 +25,14 @@ Vue.component('entity-tree', {
   methods: {
     // Send an HTTP request for the current scope
     request_scope(scope) {
-      var url = "browse/" + scope;
+      var url = "browse/" + scope + "?include=Name";
       if (this.filter) {
-        url += "?include=" + this.filter.join(",");
+        url += "," + this.filter.join(",");
       }
       app.get(url, (msg) => {
+        if (this.scope != this.scope_pending) {
+          this.$emit("select-scope", {scope: this.scope_pending});
+        }
         this.scope = this.scope_pending;
         this.entities = msg;
         this.error = false;
@@ -61,7 +64,7 @@ Vue.component('entity-tree', {
           this.error = true;
         }
       });
-    },        
+    },
     // Stop periodically requesting the scope
     stopRequesting() {
       this.scope = undefined;
