@@ -51,6 +51,8 @@ bool request_files(
     reply->body = ecs_os_strdup(path);
     reply->is_file = true;
 
+    ecs_os_free(etc_path);
+
     return true;
 }
 
@@ -154,17 +156,16 @@ ECS_STRUCT(Velocity, {
 });
 
 void FlecsDashImport(
-    ecs_world_t *world,
-    int flags)
+    ecs_world_t *world)
 {
     ECS_MODULE(world, FlecsDash);
 
-    ECS_IMPORT(world, FlecsDashMonitor, 0);
+    ECS_IMPORT(world, FlecsDashMonitor);
 
-    ECS_IMPORT(world, FlecsMeta, 0);
-    ECS_IMPORT(world, FlecsPlayer, 0);
-    ECS_IMPORT(world, FlecsComponentsHttp, 0);
-    ECS_IMPORT(world, FlecsRest, 0);
+    ECS_IMPORT(world, FlecsMeta);
+    ECS_IMPORT(world, FlecsPlayer);
+    ECS_IMPORT(world, FlecsComponentsHttp);
+    ECS_IMPORT(world, FlecsRest);
 
     ecs_set_name_prefix(world, "EcsDash");
 

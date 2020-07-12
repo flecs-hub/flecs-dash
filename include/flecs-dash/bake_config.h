@@ -24,18 +24,17 @@
 #include <flecs_components_http.h>
 #include <flecs_rest.h>
 
-/* Headers of private dependencies */
-#ifdef flecs_dash_EXPORT
-/* No dependencies */
-#endif
-
 /* Convenience macro for exporting symbols */
+#ifndef flecs_dash_STATIC
 #if flecs_dash_EXPORTS && (defined(_MSC_VER) || defined(__MINGW32__))
   #define FLECS_DASH_EXPORT __declspec(dllexport)
 #elif flecs_dash_EXPORTS
   #define FLECS_DASH_EXPORT __attribute__((__visibility__("default")))
 #elif defined _MSC_VER
   #define FLECS_DASH_EXPORT __declspec(dllimport)
+#else
+  #define FLECS_DASH_EXPORT
+#endif
 #else
   #define FLECS_DASH_EXPORT
 #endif

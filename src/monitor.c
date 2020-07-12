@@ -49,12 +49,11 @@ void EcsUpdateClock(ecs_iter_t *it) {
 }
 
 void FlecsDashMonitorImport(
-    ecs_world_t *world,
-    int flags)
+    ecs_world_t *world)
 {
     ECS_MODULE(world, FlecsDashMonitor);
 
-    ECS_IMPORT(world, FlecsMeta, 0);
+    ECS_IMPORT(world, FlecsMeta);
 
     ecs_set_name_prefix(world, "Ecs");
 

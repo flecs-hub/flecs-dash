@@ -24,14 +24,14 @@ int main(int argc, char *argv[]) {
     ecs_world_t *world = ecs_init();
     
     /* Import dashboard module */
-    ECS_IMPORT(world, FlecsDash, 0);
+    ECS_IMPORT(world, FlecsDash);
 
     /* Import HTTP server. Without this module, the dashboard server entities 
      * will be created, but there will be no HTTP server listening to them. */
-    ECS_IMPORT(world, FlecsSystemsCivetweb, 0);
+    ECS_IMPORT(world, FlecsSystemsCivetweb);
 
     /* Import the meta package, so application types show up in the dashboard */
-    ECS_IMPORT(world, FlecsMeta, 0);
+    ECS_IMPORT(world, FlecsMeta);
 
     /* Register components */
     ECS_META(world, Position);

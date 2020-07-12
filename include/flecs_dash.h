@@ -29,8 +29,7 @@ typedef struct FlecsDash {
 
 FLECS_DASH_EXPORT
 void FlecsDashImport(
-    ecs_world_t *world,
-    int flags);
+    ecs_world_t *world);
 
 #define FlecsDashImportHandles(handles)\
     ECS_IMPORT_COMPONENT(handles, EcsDashServer);\
