@@ -5,9 +5,6 @@
 #include "flecs-dash/bake_config.h"
 #include "flecs-dash/monitor.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 ////////////////////////////////////////////////////////////////////////////////
 //// Module implementation
@@ -21,6 +18,10 @@ ECS_STRUCT(EcsDashApp, {
     char *path;
     char *icon;
 });
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 typedef struct FlecsDash {
     ECS_DECLARE_COMPONENT(EcsDashServer);
@@ -38,5 +39,30 @@ void FlecsDashImport(
 #ifdef __cplusplus
 }
 #endif
+
+#ifdef __cplusplus
+#ifndef FLECS_NO_CPP
+
+namespace flecs {
+
+class dash : public FlecsDash {
+public:
+    using Server = EcsDashServer;
+    using App = EcsDashApp;
+
+    dash(flecs::world& world) {
+        FlecsDashImport(world.c_ptr());
+
+        flecs::module<flecs::dash>(world, "flecs::dash");
+
+        flecs::component<Server>(world, "Server");
+        flecs::component<App>(world, "App");
+    }
+};
+
+}
+
+#endif // FLECS_NO_CPP
+#endif // __cplusplus
 
 #endif

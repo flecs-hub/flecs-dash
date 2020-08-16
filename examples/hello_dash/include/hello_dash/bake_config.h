@@ -23,21 +23,5 @@
 #include <flecs_systems_civetweb.h>
 #include <flecs_dash.h>
 
-/* Headers of private dependencies */
-#ifdef hello_dash_EXPORT
-/* No dependencies */
-#endif
-
-/* Convenience macro for exporting symbols */
-#if hello_dash_EXPORTS && (defined(_MSC_VER) || defined(__MINGW32__))
-  #define HELLO_DASH_EXPORT __declspec(dllexport)
-#elif hello_dash_EXPORTS
-  #define HELLO_DASH_EXPORT __attribute__((__visibility__("default")))
-#elif defined _MSC_VER
-  #define HELLO_DASH_EXPORT __declspec(dllimport)
-#else
-  #define HELLO_DASH_EXPORT
-#endif
-
 #endif
 

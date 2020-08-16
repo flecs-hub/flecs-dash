@@ -4,10 +4,6 @@
 /* This generated file contains includes for project dependencies */
 #include "bake_config.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 ECS_STRUCT(EcsFps, {
     double value;
     double count;
@@ -29,6 +25,10 @@ ECS_STRUCT(EcsWorldClock, {
     double world_time;
     double world_time_raw;
 });
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 typedef struct FlecsDashMonitor {
     ECS_DECLARE_COMPONENT(EcsFps);

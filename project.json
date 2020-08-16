@@ -10,6 +10,7 @@
             "flecs.player",
             "flecs.components.http",
             "flecs.rest"
-        ]
+        ],
+        "amalgamate": true
     }
 }
