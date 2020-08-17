@@ -29,6 +29,11 @@ var app = new Vue({
       this.request(method, this.host + "/" + url, onmsg, onloadend);
     },
 
+    set_host(host) {
+      this.host = host;
+      this.init();
+    },
+
     get(url, onmsg, onloadend) {
       this.request_self("GET", url, onmsg, onloadend);
     },
