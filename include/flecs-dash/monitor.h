@@ -34,7 +34,7 @@ typedef struct FlecsDashMonitor {
     ECS_DECLARE_COMPONENT(EcsFps);
 } FlecsDashMonitor;
 
-FLECS_DASH_EXPORT
+FLECS_DASH_API
 void FlecsDashMonitorImport(
     ecs_world_t *world);
 

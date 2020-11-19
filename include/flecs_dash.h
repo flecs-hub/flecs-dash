@@ -28,7 +28,7 @@ typedef struct FlecsDash {
     ECS_DECLARE_COMPONENT(EcsDashApp);
 } FlecsDash;
 
-FLECS_DASH_EXPORT
+FLECS_DASH_API
 void FlecsDashImport(
     ecs_world_t *world);
 
