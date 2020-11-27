@@ -8,7 +8,8 @@
             "flecs",
             "flecs.meta",
             "flecs.systems.civetweb",
-            "flecs.dash"
+            "flecs.dash",
+            "flecs.os_api.bake"
         ]
     }
 }

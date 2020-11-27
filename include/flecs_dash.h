@@ -55,8 +55,8 @@ public:
 
         flecs::module<flecs::dash>(world, "flecs::dash");
 
-        flecs::component<Server>(world, "Server");
-        flecs::component<App>(world, "App");
+        flecs::component<Server>(world, "flecs::dash::Server");
+        flecs::component<App>(world, "flecs::dash::App");
     }
 };
 

@@ -23,6 +23,7 @@
 #include <flecs_player.h>
 #include <flecs_components_http.h>
 #include <flecs_rest.h>
+#include <flecs_monitor.h>
 
 /* Convenience macro for exporting symbols */
 #ifndef flecs_dash_STATIC

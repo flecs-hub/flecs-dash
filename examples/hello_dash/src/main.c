@@ -21,6 +21,8 @@ void Move(ecs_iter_t *it) {
 }
 
 int main(int argc, char *argv[]) {
+    bake_set_os_api();
+
     ecs_world_t *world = ecs_init();
     
     /* Import dashboard module */
@@ -69,6 +71,8 @@ int main(int argc, char *argv[]) {
     ECS_ENTITY(world, E6, 0);
         ecs_set(world, E6, Position, {110, 120});
         ecs_set(world, E6, Velocity, {2, 2});
+
+    ecs_set_target_fps(world, 60);
 
     /* Run main loop */
     while (ecs_progress(world, 0));

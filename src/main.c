@@ -66,10 +66,10 @@ bool request_player(
 {
     const char *cmd = request->relative_url;
 
-    ecs_entity_t ecs_entity(EcsPlayer) = ecs_lookup_fullpath(
+    ecs_entity_t ecs_typeid(EcsPlayer) = ecs_lookup_fullpath(
             world, "flecs.player.Player");
 
-    if (ecs_entity(EcsPlayer)) {
+    if (ecs_typeid(EcsPlayer)) {
         EcsPlayer *player = ecs_get_mut(world, EcsWorld, EcsPlayer, NULL);
 
         if (!strcmp(cmd, "play")) {
@@ -92,18 +92,20 @@ void RunServer(ecs_iter_t *it) {
 
     EcsDashServer *server = ecs_column(it, EcsDashServer, 1);
 
-    ecs_entity_t ecs_entity(EcsHttpEndpoint) = ecs_column_entity(it, 2);
-    ecs_entity_t ecs_entity(EcsRestServer) = ecs_column_entity(it, 3);
-    ecs_entity_t ecs_entity(EcsDashApp) = ecs_column_entity(it, 4);
-    ecs_entity_t EcsDashInitialized = ecs_column_entity(it, 5);
+    ecs_entity_t ecs_typeid(EcsHttpEndpoint) = ecs_column_entity(it, 2);
+    ecs_entity_t ecs_typeid(EcsRestServer) = ecs_column_entity(it, 3);
+    ecs_entity_t ecs_typeid(EcsMonitorServer) = ecs_column_entity(it, 4);
+    ecs_entity_t ecs_typeid(EcsDashApp) = ecs_column_entity(it, 5);
+    ecs_entity_t EcsDashInitialized = ecs_column_entity(it, 6);
 
     int32_t i;
     for (i = 0; i < it->count; i ++) {
         ecs_entity_t e = it->entities[i];
         EcsDashServer *s = &server[i];
 
-        /* Create REST server */
+        /* Create REST & monitor server */
         ecs_set(world, e, EcsRestServer, {.port = s->port});
+        ecs_set(world, e, EcsMonitorServer, {.port = s->port});
 
         if (ecs_has_entity(world, e, EcsDashInitialized)) {
             /* Don't add endpoints again if already initialized */
@@ -133,33 +135,31 @@ void RunServer(ecs_iter_t *it) {
                 .synchronous = true});
 
         /* Add browser app */
+        ecs_entity_t dash_overview = ecs_new_w_entity(world, ECS_CHILDOF | e);
+            ecs_set(world, dash_overview, EcsName, {"overview"});
+            ecs_set(world, dash_overview, EcsDashApp, {
+                .path = "etc/apps/overview",
+                .icon = "images/bar_chart.png"
+            });
+
         ecs_entity_t dash_browser = ecs_new_w_entity(world, ECS_CHILDOF | e);
             ecs_set(world, dash_browser, EcsName, {"browser"});
             ecs_set(world, dash_browser, EcsDashApp, {
                 .path = "etc/apps/browser",
                 .icon = "images/table.png"
-            });
+            });            
 
         /* Prevent initializing the server again */
         ecs_add_entity(world, e, EcsDashInitialized);
     }
 }
 
-ECS_STRUCT(Position, {
-    float x;
-    float y;
-});
-
-ECS_STRUCT(Velocity, {
-    float x;
-    float y;
-});
-
 void FlecsDashImport(
     ecs_world_t *world)
 {
     ECS_MODULE(world, FlecsDash);
 
+    ECS_IMPORT(world, FlecsMonitor);
     ECS_IMPORT(world, FlecsDashMonitor);
 
     ECS_IMPORT(world, FlecsMeta);
@@ -177,6 +177,7 @@ void FlecsDashImport(
     ECS_SYSTEM(world, RunServer, EcsOnSet, Server,
         :flecs.components.http.Endpoint,
         :flecs.rest.Server,
+        :flecs.monitor.Server,
         :App,
         :Initialized);
 

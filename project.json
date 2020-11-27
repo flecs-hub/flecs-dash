@@ -9,7 +9,8 @@
             "flecs.meta",
             "flecs.player",
             "flecs.components.http",
-            "flecs.rest"
+            "flecs.rest",
+            "flecs.monitor"
         ],
         "amalgamate": true
     }

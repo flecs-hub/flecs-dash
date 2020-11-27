@@ -45,7 +45,7 @@ void EcsUpdateClock(ecs_iter_t *it) {
 
     const ecs_world_info_t *info = ecs_get_world_info(world);
     world_clock->world_time = info->world_time_total;
-    world_clock->world_time_raw = info->world_time_total_raw;
+    world_clock->world_time_raw = 0;
 }
 
 void FlecsDashMonitorImport(

@@ -22,6 +22,7 @@
 #include <flecs_meta.h>
 #include <flecs_systems_civetweb.h>
 #include <flecs_dash.h>
+#include <flecs_os_api_bake.h>
 
 #endif
 
