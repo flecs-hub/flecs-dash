@@ -15,7 +15,9 @@ Module      | Description
 [flecs.systems.civetweb](https://github.com/flecs-hub/flecs-systems-civetweb) | HTTP server implementation
 [flecs.dash](https://github.com/flecs-hub/flecs-dash) | The dashboard (this project)
 
-To use the modules, add the module source & header file (from the repository root) to your project. Then copy the `etc` directory from `flecs.dash` to your project root.
+1. Add the module source & header file (from the repository root) to your project for each dependency
+2. Copy the `etc` directory from the `flecs.dash` repository to your project root. 
+3. Configure a threading implementation in the OS API (see below)
 
 To add the dashboard to a C application, do:
 ```c
@@ -33,6 +35,14 @@ ecs.entity().set<flecs::dash::Server>({9090});
 ```
 
 Make sure to start your application from the project root. This ensures that the dashboard code can find the web resources. Go to `http://localhost:9090` to open the dashboard.
+
+## Setting up OS API
+The webserver requires a threading implementation to be configured in the Flecs OS API. You can do this yourself, or add this example as a dependency to your project:
+https://github.com/SanderMertens/flecs/tree/master/examples/os_api/flecs-os_api-posix. When using this example, make sure to add this before creating the world:
+
+```c
+posix_set_os_api();
+```
 
 ## Screenshot
 
