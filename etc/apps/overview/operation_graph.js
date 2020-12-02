@@ -77,12 +77,14 @@ const operation_chart = {
             beginAtZero: true,
             padding: 10,
             callback: function(value, index, values) {
-                return value;
+                return value + "/s";
             }
           }
         }],
         xAxes: [{
           ticks: {
+            minRotation: 0,
+            maxRotation: 0,
             maxTicksLimit: 20
           }
         }]

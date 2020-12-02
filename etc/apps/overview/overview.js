@@ -85,7 +85,11 @@ Vue.component('app-overview', {
       if (!this.data.world) {
         return 0;
       }
-      return (100 * this.data.world.current.matched_table_count / 
+
+      /* Compute global fragmentation as total matched tables divided by total 
+       * matched entities. Subtract one from the tables, so that if there is a
+       * single entity matching a single table, fragmentation is 0% */
+      return (100 * (this.data.world.current.matched_table_count - 1) / 
           this.data.world.current.matched_entity_count).toFixed(0);
     }         
   },

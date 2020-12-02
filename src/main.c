@@ -139,14 +139,21 @@ void RunServer(ecs_iter_t *it) {
             ecs_set(world, dash_overview, EcsName, {"overview"});
             ecs_set(world, dash_overview, EcsDashApp, {
                 .path = "etc/apps/overview",
-                .icon = "images/bar_chart.png"
+                .icon = "images/usage.png"
             });
+
+        ecs_entity_t dash_systems = ecs_new_w_entity(world, ECS_CHILDOF | e);
+            ecs_set(world, dash_systems, EcsName, {"systems"});
+            ecs_set(world, dash_systems, EcsDashApp, {
+                .path = "etc/apps/systems",
+                .icon = "images/layers.png"
+            });  
 
         ecs_entity_t dash_browser = ecs_new_w_entity(world, ECS_CHILDOF | e);
             ecs_set(world, dash_browser, EcsName, {"browser"});
             ecs_set(world, dash_browser, EcsDashApp, {
                 .path = "etc/apps/browser",
-                .icon = "images/table.png"
+                .icon = "images/tree.png"
             });            
 
         /* Prevent initializing the server again */

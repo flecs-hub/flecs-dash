@@ -70,6 +70,7 @@ div.content {
   height: calc(100vh - 40px);
   top: 40px;
   left: 70px;
+  overflow-y: auto;
 }
 
 div.play-controls {
@@ -241,11 +242,6 @@ div.metric-content {
 
 div.metric-header {
   text-transform: uppercase;
-}
-
-div.metric-header-thick {
-  text-transform: uppercase;
-  padding-bottom: 10px; 
 }
 
 input {

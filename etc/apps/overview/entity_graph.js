@@ -54,6 +54,8 @@ const entity_chart = {
         }],
         xAxes: [{
           ticks: {
+            minRotation: 0,
+            maxRotation: 0,            
             maxTicksLimit: 20
           }
         }]
