@@ -72,7 +72,7 @@ Add the above code for creating the server to your application. You can now run 
 
 ## Screenshots
 
-<img width="1119" alt="Screen Shot 2020-12-03 at 11 05 20 AM" src="https://user-images.githubusercontent.com/9919222/101075898-79fd4380-3557-11eb-9fa3-6b5aed33f4ec.png">
+<img width="1119" alt="Screen Shot 2020-12-03 at 11 21 12 AM" src="https://user-images.githubusercontent.com/9919222/101077466-bb8eee00-3559-11eb-97b7-6524219dc0d2.png">
+<img width="1119" alt="Screen Shot 2020-12-03 at 11 21 32 AM" src="https://user-images.githubusercontent.com/9919222/101077456-b92c9400-3559-11eb-8b6b-6d39bec4d56d.png">
 
-<img width="1119" alt="Screen Shot 2020-12-03 at 11 05 29 AM" src="https://user-images.githubusercontent.com/9919222/101075904-7c5f9d80-3557-11eb-9af1-ccb72535242f.png">
 
