@@ -70,7 +70,7 @@ bake_set_os_api();
 
 Add the above code for creating the server to your application. You can now run the application from anywhere with `bake run`. You don't need to copy the web files to your project root, as it will be automatically discovered by the bake runtime.
 
-## Screenshot
+## Screenshots
 
 <img width="1119" alt="Screen Shot 2020-12-03 at 11 05 20 AM" src="https://user-images.githubusercontent.com/9919222/101075898-79fd4380-3557-11eb-9fa3-6b5aed33f4ec.png">
 
