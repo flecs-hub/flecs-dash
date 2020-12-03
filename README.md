@@ -49,14 +49,14 @@ When using bake, clone & build the above modules and add them as dependencies to
 
 ```json
 {
-  "id": "my_app"
+  "id": "my_app",
   "type": "application",
   "value": {
     "use": [
       "flecs", 
       "flecs.dash",
       "flecs.systems.civetweb", 
-       flecs.os_api.bake"
+      "flecs.os_api.bake"
     ]
   }
 }
