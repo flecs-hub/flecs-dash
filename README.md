@@ -16,7 +16,7 @@ Module      | Description
 [flecs.dash](https://github.com/flecs-hub/flecs-dash) | The dashboard (this project)
 
 1. Add the module source & header file (from the repository root) to your project for each dependency
-2. Copy the `etc` directory from the `flecs.dash` repository to your project root. 
+2. Copy the `flecs-dash/etc` directory in this repository to `etc/flecs-dash` in your project root
 3. Configure a threading implementation in the OS API (see below)
 
 To add the dashboard to a C application, do:
@@ -44,6 +44,35 @@ https://github.com/SanderMertens/flecs/tree/master/examples/os_api/flecs-os_api-
 posix_set_os_api();
 ```
 
-## Screenshot
+## Using flecs.dash with bake
+When using bake, clone & build the above modules and add them as dependencies to your project. Additionally, build & add the bake OS API example from the flecs repository as well.
 
-<img width="1117" alt="Screen Shot 2020-11-26 at 8 14 43 PM" src="https://user-images.githubusercontent.com/9919222/100412011-39b63680-3028-11eb-87ca-406f905ca037.png">
+```json
+{
+  "id": "my_app",
+  "type": "application",
+  "value": {
+    "use": [
+      "flecs", 
+      "flecs.dash",
+      "flecs.systems.civetweb", 
+      "flecs.os_api.bake"
+    ]
+  }
+}
+```
+
+Before creating the world, call this function to install the bake OS API:
+
+```c
+bake_set_os_api();
+```
+
+Add the above code for creating the server to your application. You can now run the application from anywhere with `bake run`. You don't need to copy the web files to your project root, as it will be automatically discovered by the bake runtime.
+
+## Screenshots
+
+<img width="1119" alt="Screen Shot 2020-12-03 at 11 21 12 AM" src="https://user-images.githubusercontent.com/9919222/101077466-bb8eee00-3559-11eb-97b7-6524219dc0d2.png">
+<img width="1119" alt="Screen Shot 2020-12-03 at 11 21 32 AM" src="https://user-images.githubusercontent.com/9919222/101077456-b92c9400-3559-11eb-8b6b-6d39bec4d56d.png">
+
+
