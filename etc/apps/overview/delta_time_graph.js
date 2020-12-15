@@ -1,62 +1,37 @@
-const operation_chart = {
+const delta_time_chart = {
     type: 'line',
     data: {
       labels: [],
       datasets: [
         {
-          label: 'New',
+          label: 'avg',
           data: [],
           backgroundColor: [ 'rgba(0,0,0,0)' ],
           borderColor: [
             '#5BE595',
           ],
           borderWidth: 2,
-          pointRadius: 0,
-          yAxisID: "count"
+          pointRadius: 0
         },
         {
-          label: 'Delete',
+          label: 'min',
           data: [],
           backgroundColor: [ 'rgba(0,0,0,0)' ],
           borderColor: [
-            '#46D9E6',
+            '#40805B',
           ],
-          borderWidth: 2,
-          pointRadius: 0,
-          yAxisID: "count"
+          borderWidth: 1,
+          pointRadius: 0
         },
         {
-          label: 'Set',
+          label: 'max',
           data: [],
           backgroundColor: [ 'rgba(0,0,0,0)' ],
           borderColor: [
-            '#2D5BE6',
+            '#40805B',
           ],
-          borderWidth: 2,
-          pointRadius: 0,
-          yAxisID: "count"
-        },      
-        {
-          label: 'Add',
-          data: [],
-          backgroundColor: [ 'rgba(0,0,0,0)' ],
-          borderColor: [
-            '#6146E6',
-          ],
-          borderWidth: 2,
-          pointRadius: 0,
-          yAxisID: "count"
-        },
-        {
-          label: 'Remove',
-          data: [],
-          backgroundColor: [ 'rgba(0,0,0,0)' ],
-          borderColor: [
-            '#E550E6',
-          ],
-          borderWidth: 2,
-          pointRadius: 0,
-          yAxisID: "count"
+          borderWidth: 1,
+          pointRadius: 0
         }
       ]
     },
@@ -72,12 +47,13 @@ const operation_chart = {
       },    
       scales: {
         yAxes: [{
-          id: 'count',
+          id: 'time',
+          position: 'right',
           ticks: {
-            beginAtZero: true,
+            beginAtZero: false,
             padding: 10,
             callback: function(value, index, values) {
-                return value + "/s";
+                return (1000 * value).toFixed(2) + "ms";
             }
           }
         }],
@@ -92,7 +68,7 @@ const operation_chart = {
     }  
   }
   
-  Vue.component('operation-graph', {
+  Vue.component('delta-time-graph', {
     props: ['tick', 'data'],
     updated() {
       this.updateChart();
@@ -118,20 +94,17 @@ const operation_chart = {
             labels.push((length  - i) + "s");
         }
   
-        operation_chart.data.labels = labels;
-        operation_chart.data.datasets[0].data = this.data.world.history_1m.new_count.avg;
-        operation_chart.data.datasets[1].data = this.data.world.history_1m.delete_count.avg;
-        operation_chart.data.datasets[2].data = this.data.world.history_1m.set_count.avg;
-        operation_chart.data.datasets[3].data = this.data.world.history_1m.add_count.avg;
-        operation_chart.data.datasets[4].data = this.data.world.history_1m.remove_count.avg;
+        delta_time_chart.data.labels = labels;
+        delta_time_chart.data.datasets[0].data = this.data.world.history_1m.delta_time.avg;
+        delta_time_chart.data.datasets[1].data = this.data.world.history_1m.delta_time.min;
+        delta_time_chart.data.datasets[2].data = this.data.world.history_1m.delta_time.max;
       },
       createChart() {
-        const ctx = document.getElementById('operation-graph');
-  
+        const ctx = document.getElementById('delta-time-graph');
         this.chart = new Chart(ctx, {
-          type: operation_chart.type,
-          data: operation_chart.data,
-          options: operation_chart.options
+          type: delta_time_chart.type,
+          data: delta_time_chart.data,
+          options: delta_time_chart.options
         });
       },
       updateChart() {
@@ -144,6 +117,6 @@ const operation_chart = {
     },
     template: `
       <div class="app-graph">
-        <canvas id="operation-graph" :data-fps="tick"></canvas>
+        <canvas id="delta-time-graph" :data-fps="tick"></canvas>
       </div>`
   });

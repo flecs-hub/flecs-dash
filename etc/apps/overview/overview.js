@@ -142,6 +142,13 @@ Vue.component('app-overview', {
       </div>
 
       <div class="metric">
+        <div class="metric-header">delta time</div>
+        <div class="metric-content">
+          <delta-time-graph :data="data" :tick="tick"></delta-time-graph>
+        </div>
+      </div>      
+
+      <div class="metric">
         <div class="metric-header">operations ({{operation_count()}})</div>
         <div class="metric-content">
           <operation-graph :data="data" :tick="tick"></operation-graph>
@@ -177,4 +184,7 @@ app.app_loaded("overview", [{
 }, {
   name: "table-graph",
   url: "apps/overview/table_graph.js"
+}, {
+  name: "delta-time-graph",
+  url: "apps/overview/delta_time_graph.js"
 }]);
