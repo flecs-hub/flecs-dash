@@ -4,6 +4,8 @@
 /* This generated file contains includes for project dependencies */
 #include "bake_config.h"
 
+#ifndef FLECS_LEGACY
+
 ECS_STRUCT(EcsFps, {
     double value;
     double count;
@@ -25,6 +27,8 @@ ECS_STRUCT(EcsWorldClock, {
     double world_time;
     double world_time_raw;
 });
+
+#endif
 
 #ifdef __cplusplus
 extern "C" {

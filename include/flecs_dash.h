@@ -10,6 +10,8 @@
 //// Module implementation
 ////////////////////////////////////////////////////////////////////////////////
 
+#ifndef FLECS_LEGACY
+
 ECS_STRUCT(EcsDashServer, {
     int16_t port;
 });
@@ -18,6 +20,8 @@ ECS_STRUCT(EcsDashApp, {
     char *path;
     char *icon;
 });
+
+#endif
 
 #ifdef __cplusplus
 extern "C" {
