@@ -66,21 +66,21 @@ bool request_player(
 {
     const char *cmd = request->relative_url;
 
-    ecs_entity_t ecs_typeid(EcsPlayer) = ecs_lookup_fullpath(
-            world, "flecs.player.Player");
+    ecs_entity_t scope = ecs_lookup_fullpath(world, "flecs.player");
+    ecs_entity_t ecs_typeid(EcsPlayer) = ecs_lookup_path(world, scope, "Player");
 
     if (ecs_typeid(EcsPlayer)) {
-        EcsPlayer *player = ecs_get_mut(world, EcsWorld, EcsPlayer, NULL);
+        scope = ecs_lookup_path(world, scope, "mode");
 
-        if (!strcmp(cmd, "play")) {
-            player->state = EcsPlayerPlay;
-        } else if (!strcmp(cmd, "pause")) {
-            player->state = EcsPlayerPause;
-        } else if (!strcmp(cmd, "stop")) {
-            player->state = EcsPlayerStop;
+        ecs_entity_t mode = ecs_lookup_path(world, scope, cmd);
+
+        if (mode) {
+            EcsPlayer *player = ecs_get_mut(world, EcsWorld, EcsPlayer, NULL);
+
+            player->mode = mode;
+
+            ecs_modified(world, EcsWorld, EcsPlayer);
         }
-
-        ecs_modified(world, EcsWorld, EcsPlayer);
     }
 
     return true;
