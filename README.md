@@ -16,8 +16,18 @@ Module      | Description
 [flecs.dash](https://github.com/flecs-hub/flecs-dash) | The dashboard (this project)
 
 1. Add the module source & header file (from the repository root) to your project for each dependency
-2. Copy the `flecs-dash/etc` directory in this repository to `etc/flecs-dash` in your project root
+2. Copy the `flecs-dash/etc` directory in this repository to `etc/flecs-dash` under your project root directory
 3. Configure a threading implementation in the OS API (see below)
+
+If your project root directory is `my_app`, then your directory structure should look like this:
+```
+my_app/etc/flecs-dash/apps
+my_app/etc/flecs-dash/css
+my_app/etc/flecs-dash/images
+my_app/etc/flecs-dash/js
+my_app/etc/flecs-dash/favicon.png
+my_app/etc/flecs-dash/index.html
+```
 
 To add the dashboard to a C application, do:
 ```c
@@ -34,7 +44,7 @@ world.import<flecs::systems::civetweb>();
 ecs.entity().set<flecs::dash::Server>({9090});
 ```
 
-Make sure to start your application from the project root. This ensures that the dashboard code can find the web resources. Go to `http://localhost:9090` to open the dashboard.
+**Important**: Make sure to start your application from the project root directory. This ensures that the dashboard code can find the web resources. Go to `http://localhost:9090` to open the dashboard.
 
 ## Setting up OS API
 The webserver requires a threading implementation to be configured in the Flecs OS API. You can do this yourself, or add this example as a dependency to your project:
