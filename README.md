@@ -80,6 +80,40 @@ bake_set_os_api();
 
 Add the above code for creating the server to your application. You can now run the application from anywhere with `bake run`. You don't need to copy the web files to your project root, as it will be automatically discovered by the bake runtime.
 
+## Troubleshooting
+
+### My application crashes when I import the flecs.dash!
+This is likely because you did not set an OS API implementation for threading functions, as the server needs synchronization to safely access the world.  See [Setting up OS API](#setting_up_os_api) for how to add this to the application.
+
+### I'm not using bake, can I still use the dashboard?
+Absolutely, the dashboard has no dependencies on bake. As long as all the modules are cloned, and the server can find the dashboard web resources, it will work with any buildsystem.
+
+### I'm using bake, do I still need to copy files to my project?
+Not if you set the bake OS API (see Flecs examples folder) with `bake_set_os_api()`. This will register a function with Flecs that automatically finds the files.
+
+### My application is running, but if I open a browser I get a 404 error (no page found)
+Good news, the server is running! The most likely cause of this is that the server process cannot find the web resources. Make sure to copy the files to the right location as is described in [Usage](#usage). Also ensure that the working directory (typically the location from which the application is started) is the project root.
+
+### My application is running, but if I open a browser I get a server error!
+This means that the browser cannot find a server on the specified port. Make sure you're using the correct IP address and port.
+
+### I need to store the resources in a different folder, is this possible?
+Yes. If you cannot store your flecs dash resources in the location mentioned above, you can provide a custom location with the "module_to_etc" OS API function. This function overrides the default behavior of Flecs to locate files. To do this, add a function like this to your code:
+
+```c
+char* my_module_to_etc(const char* module_name) {
+    // Simple fix to make flecs.dash work. Can be made more generic by using the module_name to generate the path
+    return ecs_os_strdup("path_to_dash_files");
+}
+
+int main(int argc, char *argv[]) {
+  // set OS API with *_set_os_api function
+  
+  // Override default module_to_etc
+  ecs_os_api.module_to_etc_ = my_module_to_etc;
+}
+```
+
 ## Screenshots
 
 <img width="1119" alt="Screen Shot 2020-12-03 at 11 21 12 AM" src="https://user-images.githubusercontent.com/9919222/101077466-bb8eee00-3559-11eb-97b7-6524219dc0d2.png">
