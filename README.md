@@ -114,6 +114,8 @@ int main(int argc, char *argv[]) {
 }
 ```
 
+Verify that the path you provide points directly to the files, so if you do `path + "/index.html`, it points to the file.
+
 ## Screenshots
 
 <img width="1119" alt="Screen Shot 2020-12-03 at 11 21 12 AM" src="https://user-images.githubusercontent.com/9919222/101077466-bb8eee00-3559-11eb-97b7-6524219dc0d2.png">
