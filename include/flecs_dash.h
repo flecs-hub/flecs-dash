@@ -1,3 +1,7 @@
+#ifdef _MSC_VER
+#define _CRT_SECURE_NO_WARNINGS
+#endif
+
 #ifndef FLECS_DASH_H
 #define FLECS_DASH_H
 
