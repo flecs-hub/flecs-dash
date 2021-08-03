@@ -192,21 +192,21 @@ void RunServer(ecs_iter_t *it) {
         
         /* Add endpoint to server for serving up files */
         ecs_entity_t e_files = ecs_new_w_entity(world, ECS_CHILDOF | e);
-            ecs_set(world, e_files, EcsName, {"e_files"});
+            ecs_set_name(world, e_files, "e_files");
             ecs_set(world, e_files, EcsHttpEndpoint, {
                 .url = "",
                 .action = request_files});
 
         /* Add endpoint to server that returns entity id of server */
         ecs_entity_t e_this = ecs_new_w_entity(world, ECS_CHILDOF | e);
-            ecs_set(world, e_this, EcsName, {"e_this"});
+            ecs_set_name(world, e_this, "e_this");
             ecs_set(world, e_this, EcsHttpEndpoint, {
                 .url = "this",
                 .action = request_this}); 
 
         /* Add endpoint to server that returns entity id of server */
         ecs_entity_t e_player = ecs_new_w_entity(world, ECS_CHILDOF | e);
-            ecs_set(world, e_player, EcsName, {"e_player"});
+            ecs_set_name(world, e_player, "e_player");
             ecs_set(world, e_player, EcsHttpEndpoint, {
                 .url = "player",
                 .action = request_player,
@@ -214,21 +214,21 @@ void RunServer(ecs_iter_t *it) {
 
         /* Add browser app */
         ecs_entity_t dash_overview = ecs_new_w_entity(world, ECS_CHILDOF | e);
-            ecs_set(world, dash_overview, EcsName, {"overview"});
+            ecs_set_name(world, dash_overview, "overview");
             ecs_set(world, dash_overview, EcsDashApp, {
                 .path = "etc/apps/overview",
                 .icon = "images/usage.png"
             });
 
         ecs_entity_t dash_systems = ecs_new_w_entity(world, ECS_CHILDOF | e);
-            ecs_set(world, dash_systems, EcsName, {"systems"});
+            ecs_set_name(world, dash_systems, "systems");
             ecs_set(world, dash_systems, EcsDashApp, {
                 .path = "etc/apps/systems",
                 .icon = "images/layers.png"
             });  
 
         ecs_entity_t dash_browser = ecs_new_w_entity(world, ECS_CHILDOF | e);
-            ecs_set(world, dash_browser, EcsName, {"browser"});
+            ecs_set_name(world, dash_browser, "browser");
             ecs_set(world, dash_browser, EcsDashApp, {
                 .path = "etc/apps/browser",
                 .icon = "images/tree.png"
